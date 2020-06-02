@@ -8,41 +8,46 @@ namespace FiveNumberStatsProgram
     {
         static void Main()
         {
-            Console.WriteLine("How many numbers are there");
+            Console.Write("How many numbers are there? ");
             int totalNum = Convert.ToInt32(Console.ReadLine());
-            int[] nums = new int[totalNum];
+            var nums = new double[totalNum];
 
             for(int index = 0; index < totalNum; index++)
             {
                 Console.WriteLine("Enter num: ");
-                nums[index] = Convert.ToInt32(Console.ReadLine());
+                nums[index] = Convert.ToDouble(Console.ReadLine());
             }
             Array.Sort(nums);
-            MaxMin(nums, totalNum);
-            Median(nums, totalNum);
-
+            Console.WriteLine("MIN: {0} MAX: {1}", nums[0], nums[totalNum - 1]);
+            Console.WriteLine("Q1: {0}  MEDIAN: {1}  Q3: {2}", Percentile(nums, 25), Percentile(nums, 50), Percentile(nums, 75));
         }
-        static void MaxMin(int[] nums, int totalNum)
+
+        static double Percentile(double[] nums, int totalNums)
         {
-            Console.WriteLine("MIN: {0} MAX: {1}", nums[0], nums[totalNum-1]);
-        }
 
-        static void Median(int[] nums, int totalNum)
-        {
-            double mediaValue = 0.0;
+            if (totalNums >= 100) return nums[nums.Length - 1];
 
-            if (totalNum % 2 == 0)
+            double position = (nums.Length + 1) * totalNums / 100;
+            double leftNumber = 0.0d, rightNumber = 0.0d;
+
+            double n = totalNums / 100.0d * (nums.Length - 1) + 1.0d;
+
+            if (position >= 1)
             {
-                var firstValue = nums[(nums.Length / 2) - 1];
-                var secondValue = nums[(nums.Length / 2)];
-                mediaValue = (firstValue + secondValue) / 2.0;
+                leftNumber = nums[(int)Math.Floor(n) - 1];
+                rightNumber = nums[(int)Math.Floor(n)];
             }
-            if (totalNum % 2 == 1)
+            else
             {
-                mediaValue = nums[(nums.Length / 2)];
+                leftNumber = nums[0]; // first data
+                rightNumber = nums[1]; // first data
             }
-            Console.WriteLine("MEDIAN: {0}",mediaValue);
-           
-        }
+
+            //if (leftNumber == rightNumber)
+            if (Equals(leftNumber, rightNumber))
+                return leftNumber;
+            double part = n - Math.Floor(n);
+            return leftNumber + part * (rightNumber - leftNumber);
+        } // end of internal function percentile
     }
 }
