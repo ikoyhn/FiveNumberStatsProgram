@@ -8,16 +8,21 @@ namespace FiveNumberStatsProgram
     {
         static void Main()
         {
+            //Ask user for input
             Console.Write("How many numbers are there? ");
             int totalNum = Convert.ToInt32(Console.ReadLine());
             var nums = new double[totalNum];
 
+            //Get each number and enter into an array
             for(int index = 0; index < totalNum; index++)
             {
                 Console.WriteLine("Enter num: ");
                 nums[index] = Convert.ToDouble(Console.ReadLine());
             }
+
+            //Sort the list
             Array.Sort(nums);
+
             Console.WriteLine("MIN: {0} MAX: {1}", nums[0], nums[totalNum - 1]);
             Console.WriteLine("Q1: {0}  MEDIAN: {1}  Q3: {2}", Percentile(nums, 25), Percentile(nums, 50), Percentile(nums, 75));
         }
@@ -48,6 +53,6 @@ namespace FiveNumberStatsProgram
                 return leftNumber;
             double part = n - Math.Floor(n);
             return leftNumber + part * (rightNumber - leftNumber);
-        } // end of internal function percentile
+        } 
     }
 }
