@@ -1,10 +1,11 @@
 ﻿using System;
+using Backend;
 using System.Collections.Generic;
 using System.Xml.Schema;
 
-namespace FiveNumberStatsProgram
+namespace Frontend
 {
-    class Program
+    class MainProgram
     {
         static void Main()
         {
@@ -24,12 +25,17 @@ namespace FiveNumberStatsProgram
             Array.Sort(nums);
 
             Console.WriteLine("MIN: {0} MAX: {1}", nums[0], nums[totalNum - 1]);
-            Console.WriteLine("Q1: {0}  MEDIAN: {1}  Q3: {2}", Percentile(nums, 25), Percentile(nums, 50), Percentile(nums, 75));
+            Console.WriteLine("Q1: {0}  MEDIAN: {1}  Q3: {2}", Operations.Percentile(nums, 25), Operations.Percentile(nums, 50), Operations.Percentile(nums, 75));
         }
+    }
+}
 
-        static double Percentile(double[] nums, int totalNums)
+namespace Backend
+{
+    class Operations
+    {
+        public static double Percentile(double[] nums, int totalNums)
         {
-
             if (totalNums >= 100) return nums[nums.Length - 1];
 
             double position = (nums.Length + 1) * totalNums / 100;
@@ -53,6 +59,6 @@ namespace FiveNumberStatsProgram
                 return leftNumber;
             double part = n - Math.Floor(n);
             return leftNumber + part * (rightNumber - leftNumber);
-        } 
+        }
     }
 }
