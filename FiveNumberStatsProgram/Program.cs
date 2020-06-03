@@ -1,9 +1,10 @@
 ﻿using System;
-using Backend;
+using Calculations;
 using System.Collections.Generic;
 using System.Xml.Schema;
+using Calculations;
 
-namespace Frontend
+namespace FiveNumberSummary
 {
     class MainProgram
     {
@@ -11,11 +12,11 @@ namespace Frontend
         {
             //Ask user for input
             Console.Write("How many numbers are there? ");
-            int totalNum = Convert.ToInt32(Console.ReadLine());
-            var nums = new double[totalNum];
+            int totalNums = Convert.ToInt32(Console.ReadLine());
+            var nums = new double[totalNums];
 
             //Get each number and enter into an array
-            for(int index = 0; index < totalNum; index++)
+            for(int index = 0; index < totalNums; index++)
             {
                 Console.WriteLine("Enter num: ");
                 nums[index] = Convert.ToDouble(Console.ReadLine());
@@ -24,13 +25,12 @@ namespace Frontend
             //Sort the list
             Array.Sort(nums);
 
-            Console.WriteLine("MIN: {0} MAX: {1}", nums[0], nums[totalNum - 1]);
-            Console.WriteLine("Q1: {0}  MEDIAN: {1}  Q3: {2}", Operations.Percentile(nums, 25), Operations.Percentile(nums, 50), Operations.Percentile(nums, 75));
+            Console.WriteLine("MIN:{0} Q1:{1} MEDIAN:{2}  Q3:{3} MAX:{4}", Operations.Min(nums,totalNums), Operations.Percentile(nums, 25), Operations.Percentile(nums, 50), Operations.Percentile(nums, 75), Operations.Max(nums,totalNums));
         }
     }
 }
 
-namespace Backend
+namespace Calculations
 {
     class Operations
     {
@@ -59,6 +59,18 @@ namespace Backend
                 return leftNumber;
             double part = n - Math.Floor(n);
             return leftNumber + part * (rightNumber - leftNumber);
+        }
+
+        public static double Min(double[] nums, int totalNums)
+        {
+            double min = nums[0];
+            return min;
+        }
+
+        public static double Max(double[] nums, int totalNums)
+        {
+            double max = nums[totalNums - 1];
+            return max;
         }
     }
 }
